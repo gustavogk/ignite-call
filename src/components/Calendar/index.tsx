@@ -38,7 +38,6 @@ export function Calendar() {
         </thead>
         <tbody>
           <tr>
-            <td></td>
             <td>
               <CalendarDay>1</CalendarDay>
             </td>
