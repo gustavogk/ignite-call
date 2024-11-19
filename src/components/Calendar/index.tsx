@@ -11,6 +11,7 @@ import { CaretLeft, CaretRight } from "phosphor-react";
 import { getWeekDays } from "@/utils/get-week-days";
 import { useMemo, useState } from "react";
 import dayjs from "dayjs";
+import { on } from "events";
 
 interface CalendarWeek {
   week: number;
@@ -22,7 +23,12 @@ interface CalendarWeek {
 
 type CalendarWeeks = CalendarWeek[];
 
-export function Calendar() {
+interface CalendarProps {
+  selectedDate: Date | null;
+  onDateSelected: (date: Date) => void;
+}
+
+export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
   const [currentDate, setCurentDate] = useState(() => {
     return dayjs().set("date", 1);
   });
@@ -80,7 +86,7 @@ export function Calendar() {
       ...daysInMonthArray.map((date) => {
         return {
           date,
-          disabled: false,
+          disabled: date.endOf("day").isBefore(new Date()),
         };
       }),
       ...nextMonthFillArray.map((date) => {
@@ -140,7 +146,11 @@ export function Calendar() {
                 {days.map(({ date, disabled }) => {
                   return (
                     <td key={date.toString()}>
-                      <CalendarDay key={date.toString()} disabled={disabled}>
+                      <CalendarDay
+                        onClick={() => onDateSelected(date.toDate())}
+                        key={date.toString()}
+                        disabled={disabled}
+                      >
                         {date.get("date")}
                       </CalendarDay>
                     </td>
