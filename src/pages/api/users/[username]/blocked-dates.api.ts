@@ -39,7 +39,6 @@ export default async function handle(
     });
   });
 
-  // Get blocked dates postgress query
   const blockedDatesRaw: Array<{ date: number }> = await prisma.$queryRaw`
   SELECT
     EXTRACT(DAY FROM S.DATE) AS date,
