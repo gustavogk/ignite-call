@@ -1,7 +1,7 @@
-import { prisma } from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
+import { prisma } from "../../../../lib/prisma";
 
-export default async function handle(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -17,11 +17,13 @@ export default async function handle(
   }
 
   const user = await prisma.user.findUnique({
-    where: { username },
+    where: {
+      username,
+    },
   });
 
   if (!user) {
-    return res.status(404).json({ message: "User not found." });
+    return res.status(400).json({ message: "User does not exist." });
   }
 
   const availableWeekDays = await prisma.userTimeInterval.findMany({
@@ -34,9 +36,9 @@ export default async function handle(
   });
 
   const blockedWeekDays = [0, 1, 2, 3, 4, 5, 6].filter((weekDay) => {
-    return !availableWeekDays.some((availableWeekDay) => {
-      return availableWeekDay.week_day === weekDay;
-    });
+    return !availableWeekDays.some(
+      (availableWeekDay) => availableWeekDay.week_day === weekDay
+    );
   });
 
   const blockedDatesRaw: Array<{ date: number }> = await prisma.$queryRaw`
@@ -61,9 +63,7 @@ export default async function handle(
     COUNT(S.date) >= ((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60);
 `;
 
-  const blockedDates = blockedDatesRaw.map((item) => {
-    return item.date;
-  });
+  const blockedDates = blockedDatesRaw.map((item) => item.date);
 
   return res.json({ blockedWeekDays, blockedDates });
 }
