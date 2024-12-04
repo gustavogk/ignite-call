@@ -1,10 +1,6 @@
 
 <p align="center">
-  <img src="./public/images/logo.svg" width="200"/> 
-</p>
-
-<p align="center">
-  <img src="./public/images/avatar.svg" width="200"/> 
+  <img src="./.github/images/home.png" width="720"/> 
 </p>
 
 <p align="center">	
@@ -48,10 +44,15 @@ This project was made using the follow technologies:
 # :camera: Screenshots
   
 <div align="center">
-   <img src="./.github/home.png" width="1200px">
-   <img src="./.github/posts.png" width="1200px">
-   <img src="./.github/postpreview.png" width="1200px">
-   <img src="./.github/post.png" width="1200px">
+   <img src="./.github/images/home.png" width="1200"/> 
+   <img src="./.github/images/create-user.png" width="1200"/> 
+   <img src="./.github/images/conectar-calendario.png" width="1200"/> 
+   <img src="./.github/images/calendario-conectado.png" width="1200"/> 
+   <img src="./.github/images/availability.png" width="1200"/>
+   <img src="./.github/images/update-profile.png" width="1200"/> 
+   <img src="./.github/images/select-date.png" width="1200"/> 
+   <img src="./.github/images/create-schedule.png" width="1200"/> 
+   <img src="./.github/images/agendamento.png" width="1200"/> 
 </div>
   
 # :page_facing_up: License
