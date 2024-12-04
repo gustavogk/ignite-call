@@ -2,6 +2,8 @@ import dayjs from "dayjs";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 import { prisma } from "../../../../lib/prisma";
+import { google } from "googleapis";
+import { getGoogleOAuthToken } from "../../../../lib/google";
 
 export default async function handler(
   req: NextApiRequest,
@@ -62,6 +64,35 @@ export default async function handler(
       observations,
       date: schedulingDate.toDate(),
       user_id: user.id,
+    },
+  });
+
+  const calendar = await google.calendar({
+    version: "v3",
+    auth: await getGoogleOAuthToken(user.id),
+  });
+
+  await calendar.events.insert({
+    calendarId: "primary",
+    conferenceDataVersion: 1,
+    requestBody: {
+      summary: `Ignite Call: ${name}`,
+      description: observations,
+      start: {
+        dateTime: schedulingDate.format(),
+      },
+      end: {
+        dateTime: schedulingDate.add(1, "hour").format(),
+      },
+      attendees: [{ email, displayName: name }],
+      conferenceData: {
+        createRequest: {
+          requestId: scheduling.id,
+          conferenceSolutionKey: {
+            type: "hangoutsMeet",
+          },
+        },
+      },
     },
   });
 
