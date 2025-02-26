@@ -12,6 +12,7 @@
   <a href="mailto:gust.krv@gmail.com">
    <img alt="Email" src="https://img.shields.io/badge/-GustavoAssunção-5965e0?style=for-the-badge&logo=gmail&logoColor=white" />
   </a>
+  <img alt="License" src="https://img.shields.io/github/license/gustavogk/dtmoney?style=for-the-badge" />
 </p>
 
 <p align="center">
